@@ -16,6 +16,7 @@ import java.util.List;
 public class SaleApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(SaleApplication.class, args);
     }
 

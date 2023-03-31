@@ -1,117 +1,78 @@
 package com.example.sale.Model;
 
+import com.sun.istack.NotNull;
+import lombok.Data;
+import lombok.NonNull;
 
-public class UserInfo {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-  private String userId;
-  private String userName;
-  private String userSex;
-  private java.sql.Timestamp userDate;
-  private String userPhone;
-  private String userEmail;
-  private String userAddress;
-  private long userRentTimes;
-  private long userBuyTimes;
-  private long userRentPay;
-  private long userBuyPay;
+/**
+ * userInfo
+ * 
+ * @author <a href = "SHUZHI" > huan </a >
+ * @date 2023-03-27 09:36:46 
+ */
 
+@Entity
+@Data
+@Table ( name ="userinfo")
+public class UserInfo  implements Serializable {
 
-  public String getUserId() {
-    return userId;
-  }
+	private static final long serialVersionUID =  5597909586632887847L;
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+   	@Column(name = "userid" )
+	private Long userId;
 
+	@NotNull
+   	@Column(name = "username" )
+	private String userName;
 
-  public String getUserName() {
-    return userName;
-  }
+	@NonNull
+	@Column(name = "userpetname" )
+	private String userPetName;
 
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
+	@NotNull
+   	@Column(name = "usersex" )
+	private String userSex;
 
+	@NotNull
+   	@Column(name = "userdate" )
+	private Date userDate;
 
-  public String getUserSex() {
-    return userSex;
-  }
+	@NotNull
+   	@Column(name = "userphone" )
+	private String userPhone;
 
-  public void setUserSex(String userSex) {
-    this.userSex = userSex;
-  }
+	@NotNull
+   	@Column(name = "useremail" )
+	private String userEmail;
 
+   	@Column(name = "useraddress" )
+	private String userAddress;
 
-  public java.sql.Timestamp getUserDate() {
-    return userDate;
-  }
+   	@Column(name = "userrenttimes" )
+	private Long userRentTimes;
 
-  public void setUserDate(java.sql.Timestamp userDate) {
-    this.userDate = userDate;
-  }
+   	@Column(name = "userbuytimes" )
+	private Long userBuyTimes;
 
+   	@Column(name = "userrentpay" )
+	private Long userRentPay;
 
-  public String getUserPhone() {
-    return userPhone;
-  }
+   	@Column(name = "userbuypay" )
+	private Long userBuyPay;
 
-  public void setUserPhone(String userPhone) {
-    this.userPhone = userPhone;
-  }
+	@NotNull
+	@Column(name = "userpassword" )
+	private String userPassword;
 
+	public UserInfo() {
 
-  public String getUserEmail() {
-    return userEmail;
-  }
-
-  public void setUserEmail(String userEmail) {
-    this.userEmail = userEmail;
-  }
-
-
-  public String getUserAddress() {
-    return userAddress;
-  }
-
-  public void setUserAddress(String userAddress) {
-    this.userAddress = userAddress;
-  }
-
-
-  public long getUserRentTimes() {
-    return userRentTimes;
-  }
-
-  public void setUserRentTimes(long userRentTimes) {
-    this.userRentTimes = userRentTimes;
-  }
-
-
-  public long getUserBuyTimes() {
-    return userBuyTimes;
-  }
-
-  public void setUserBuyTimes(long userBuyTimes) {
-    this.userBuyTimes = userBuyTimes;
-  }
-
-
-  public long getUserRentPay() {
-    return userRentPay;
-  }
-
-  public void setUserRentPay(long userRentPay) {
-    this.userRentPay = userRentPay;
-  }
-
-
-  public long getUserBuyPay() {
-    return userBuyPay;
-  }
-
-  public void setUserBuyPay(long userBuyPay) {
-    this.userBuyPay = userBuyPay;
-  }
-
+	}
 }

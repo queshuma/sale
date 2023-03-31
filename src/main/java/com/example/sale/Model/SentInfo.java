@@ -1,73 +1,42 @@
 package com.example.sale.Model;
 
-
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-public class SentInfo implements Serializable {
+/**
+ * sentInfo
+ * 
+ * @author <a href = "SHUZHI" > huan </a >
+ * @date 2023-03-27 09:36:46 
+ */
 
-  @Id
-  @Column(name = "proid")
-  private long proId;
-  private long sentFirstPay;
-  private long sentSecondPay;
-  private long sentThirdPay;
-  private long sentBuy;
-  private double sentDiscount;
+@Entity
+@Table ( name ="sentInfo")
+public class SentInfo  implements Serializable {
 
+	private static final long serialVersionUID =  6245064774274496210L;
 
-  public long getProId() {
-    return proId;
-  }
+	@Id
+   	@Column(name = "proId" )
+	private String proId;
 
-  public void setProId(long proId) {
-    this.proId = proId;
-  }
+   	@Column(name = "sentFirstPay" )
+	private Long sentFirstPay;
 
+   	@Column(name = "sentSecondPay" )
+	private Long sentSecondPay;
 
-  public long getSentFirstPay() {
-    return sentFirstPay;
-  }
+   	@Column(name = "sentThirdPay" )
+	private Long sentThirdPay;
 
-  public void setSentFirstPay(long sentFirstPay) {
-    this.sentFirstPay = sentFirstPay;
-  }
+   	@Column(name = "sentBuy" )
+	private Long sentBuy;
 
-
-  public long getSentSecondPay() {
-    return sentSecondPay;
-  }
-
-  public void setSentSecondPay(long sentSecondPay) {
-    this.sentSecondPay = sentSecondPay;
-  }
-
-
-  public long getSentThirdPay() {
-    return sentThirdPay;
-  }
-
-  public void setSentThirdPay(long sentThirdPay) {
-    this.sentThirdPay = sentThirdPay;
-  }
-
-
-  public long getSentBuy() {
-    return sentBuy;
-  }
-
-  public void setSentBuy(long sentBuy) {
-    this.sentBuy = sentBuy;
-  }
-
-
-  public double getSentDiscount() {
-    return sentDiscount;
-  }
-
-  public void setSentDiscount(double sentDiscount) {
-    this.sentDiscount = sentDiscount;
-  }
-
+   	@Column(name = "sentDiscount" )
+	private BigDecimal sentDiscount;
 }

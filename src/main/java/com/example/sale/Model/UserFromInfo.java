@@ -1,67 +1,43 @@
 package com.example.sale.Model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import java.io.Serializable;
+import java.util.Date;
+import java.math.BigDecimal;
 
-public class UserFromInfo {
+/**
+ * userFromInfo
+ * 
+ * @author <a href = "SHUZHI" > huan </a >
+ * @date 2023-03-27 09:36:46 
+ */
 
-  private long proId;
-  private String proFrom;
-  private double proBackPay;
-  private java.sql.Timestamp proInTime;
-  private String proInName;
-  private double proQual;
+@Entity
+@Table ( name ="userFromInfo")
+public class UserFromInfo  implements Serializable {
 
+	private static final long serialVersionUID =  5973069099316531625L;
 
-  public long getProId() {
-    return proId;
-  }
+	@Id
+   	@Column(name = "proId" )
+	private Long proId;
 
-  public void setProId(long proId) {
-    this.proId = proId;
-  }
+   	@Column(name = "proFrom" )
+	private String proFrom;
 
+   	@Column(name = "proBackPay" )
+	private BigDecimal proBackPay;
 
-  public String getProFrom() {
-    return proFrom;
-  }
+   	@Column(name = "proInTime" )
+	private Date proInTime;
 
-  public void setProFrom(String proFrom) {
-    this.proFrom = proFrom;
-  }
+   	@Column(name = "proInName" )
+	private String proInName;
 
-
-  public double getProBackPay() {
-    return proBackPay;
-  }
-
-  public void setProBackPay(double proBackPay) {
-    this.proBackPay = proBackPay;
-  }
-
-
-  public java.sql.Timestamp getProInTime() {
-    return proInTime;
-  }
-
-  public void setProInTime(java.sql.Timestamp proInTime) {
-    this.proInTime = proInTime;
-  }
-
-
-  public String getProInName() {
-    return proInName;
-  }
-
-  public void setProInName(String proInName) {
-    this.proInName = proInName;
-  }
-
-
-  public double getProQual() {
-    return proQual;
-  }
-
-  public void setProQual(double proQual) {
-    this.proQual = proQual;
-  }
-
+   	@Column(name = "proQual" )
+	private BigDecimal proQual;
 }

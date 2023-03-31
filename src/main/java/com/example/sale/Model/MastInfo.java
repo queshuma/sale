@@ -1,47 +1,35 @@
 package com.example.sale.Model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import java.io.Serializable;
 
-public class MastInfo {
+/**
+ * mastInfo
+ * 
+ * @author <a href = "SHUZHI" > huan </a >
+ * @date 2023-03-27 09:36:46 
+ */
 
-  private String mastId;
-  private String mastTitle;
-  private String mastName;
-  private String mastPwd;
+@Entity
+@Table ( name ="mastInfo")
+public class MastInfo  implements Serializable {
 
+	private static final long serialVersionUID =  6579063383852309305L;
 
-  public String getMastId() {
-    return mastId;
-  }
+	@Id
+   	@Column(name = "mastId" )
+	private String mastId;
 
-  public void setMastId(String mastId) {
-    this.mastId = mastId;
-  }
+   	@Column(name = "mastTitle" )
+	private String mastTitle;
 
+   	@Column(name = "mastName" )
+	private String mastName;
 
-  public String getMastTitle() {
-    return mastTitle;
-  }
-
-  public void setMastTitle(String mastTitle) {
-    this.mastTitle = mastTitle;
-  }
-
-
-  public String getMastName() {
-    return mastName;
-  }
-
-  public void setMastName(String mastName) {
-    this.mastName = mastName;
-  }
-
-
-  public String getMastPwd() {
-    return mastPwd;
-  }
-
-  public void setMastPwd(String mastPwd) {
-    this.mastPwd = mastPwd;
-  }
-
+   	@Column(name = "mastPwd" )
+	private String mastPwd;
 }

@@ -1,73 +1,45 @@
 package com.example.sale.Model;
 
+import lombok.Data;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 import java.io.Serializable;
+import java.util.Date;
 
-public class RepairInfo implements Serializable {
+/**
+ * repairInfo
+ * 
+ * @author <a href = "SHUZHI" > huan </a >
+ * @date 2023-03-27 09:36:46 
+ */
 
-  @Id
-  @Column(name = "proid")
-  private Long proId;
-  private String repairQus;
-  private String repairName;
-  private String repairPay;
-  private java.sql.Timestamp repairTime;
-  private java.sql.Timestamp repairBackTime;
+@Data
+@Entity
+@Table ( name ="repairInfo")
+public class RepairInfo  implements Serializable {
 
+	private static final long serialVersionUID =  3526473407725010071L;
 
-  public Long getProId() {
-    return proId;
-  }
+	@Id
+   	@Column(name = "proId" )
+	private String proId;
 
-  public void setProId(Long proId) {
-    this.proId = proId;
-  }
+   	@Column(name = "repairQus" )
+	private String repairQus;
 
+   	@Column(name = "repairName" )
+	private String repairName;
 
-  public String getRepairQus() {
-    return repairQus;
-  }
+   	@Column(name = "repairPay" )
+	private String repairPay;
 
-  public void setRepairQus(String repairQus) {
-    this.repairQus = repairQus;
-  }
+   	@Column(name = "repairTime" )
+	private Date repairTime;
 
-
-  public String getRepairName() {
-    return repairName;
-  }
-
-  public void setRepairName(String repairName) {
-    this.repairName = repairName;
-  }
-
-
-  public String getRepairPay() {
-    return repairPay;
-  }
-
-  public void setRepairPay(String repairPay) {
-    this.repairPay = repairPay;
-  }
-
-
-  public java.sql.Timestamp getRepairTime() {
-    return repairTime;
-  }
-
-  public void setRepairTime(java.sql.Timestamp repairTime) {
-    this.repairTime = repairTime;
-  }
-
-
-  public java.sql.Timestamp getRepairBackTime() {
-    return repairBackTime;
-  }
-
-  public void setRepairBackTime(java.sql.Timestamp repairBackTime) {
-    this.repairBackTime = repairBackTime;
-  }
-
+   	@Column(name = "repairBackTime" )
+	private Date repairBackTime;
 }
