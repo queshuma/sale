@@ -56,17 +56,17 @@ public class UserInfo  implements Serializable {
    	@Column(name = "useraddress" )
 	private String userAddress;
 
-   	@Column(name = "userrenttimes" )
-	private Long userRentTimes;
+   	@Column(name = "userrenttimes")
+	private int userRentTimes;
 
    	@Column(name = "userbuytimes" )
-	private Long userBuyTimes;
+	private int userBuyTimes;
 
    	@Column(name = "userrentpay" )
-	private Long userRentPay;
+	private int userRentPay;
 
    	@Column(name = "userbuypay" )
-	private Long userBuyPay;
+	private int userBuyPay;
 
 	@NotNull
 	@Column(name = "userpassword" )
