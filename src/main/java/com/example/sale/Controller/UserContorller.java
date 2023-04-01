@@ -36,16 +36,18 @@ public class UserContorller {
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> UserInfo(@RequestParam("value") String value) {
         UserDto userDto = userService.findUserInfo(value);
-        System.out.println(userDto);
-        System.out.println(value);
         return ResponseEntity.ok(userDto);
     }
 
 //    用户注册
     @PostMapping("/user/register")
-    public String ProductsAdd(@RequestBody UserInfo userInfo) {
-        userService.saveUser(userInfo);
-        return "";
+    public String UserRegister(@RequestBody UserInfo userInfo) {
+        return userService.registUser(userInfo);
     }
 
+//    用户信息修改
+//    @PostMapping("/user/modify")
+//    public String UserModify(@RequestBody UserInfo userInfo) {
+//        return userService.modifyUserInfo(userInfo);
+//    }
 }
