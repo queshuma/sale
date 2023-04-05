@@ -6,7 +6,6 @@ import java.util.Date;
 
 @Data
 public class UserDto {
-    private long userId;
     private String userName;
     private String userPetName;
     private String userSex;
@@ -16,15 +15,19 @@ public class UserDto {
     private String userAddress;
     private String userPassword;
 
-    public UserDto(long userId, String userName, String userPetName, String userSex
-            , String userPhone, String userAddress, String userEmail, Date userDate) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userPetName = userPetName;
-        this.userSex = userSex;
-        this.userPhone = userPhone;
-        this.userDate = userDate;
-        this.userAddress = userAddress;
-        this.userEmail = userEmail;
+//    public UserDto(long userId, String userName, String userPetName, String userSex
+//            , String userPhone, String userAddress, String userEmail, Date userDate) {
+//        this.userId = userId;
+//        this.userName = userName;
+//        this.userPetName = userPetName;
+//        this.userSex = userSex;
+//        this.userPhone = userPhone;
+//        this.userDate = userDate;
+//        this.userAddress = userAddress;
+//        this.userEmail = userEmail;
+//    }
+
+    public UserDto() {
+
     }
 }

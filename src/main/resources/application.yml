@@ -20,7 +20,12 @@ spring:
             connection-timeout: 2000
             connection-test-query: select 1
     jpa:
-            show-sql: true  #在控制台打印 sql 语句
+          show-sql: true  #在控制台打印 sql 语句
+    cache:
+      type:redis # 指定使用Redis作为缓存管理器
+    redis:
+      host:127.0.0.1
+      port:6379 # Redis服务器端口号
 server:
     port:8080
 
