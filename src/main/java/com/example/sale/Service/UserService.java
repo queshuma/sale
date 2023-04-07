@@ -76,14 +76,13 @@ public class UserService {
         return "success";
     }
 
-//    用户信息获取(通过petname搜索)
+    //用户信息获取(通过petname搜索)
     public UserInfo findUserByPetName(String petname) {
         UserInfo userInfo = userInfoRepository.findByUserPetName(petname);
-//        UserDto userDto = new UserDto();
-//        userDto = modelMapper.map(userInfo, UserDto.class);
         return userInfo;
     }
 
+    //修改用户信息
     public UserDto modifyUser(UserInfo userInfo) {
         userInfoRepository.save(userInfo);
         UserDto userDto = new UserDto();
@@ -91,7 +90,13 @@ public class UserService {
         return userDto;
     }
 
+    //通过用户的petname进行查找
     public UserInfo getUserByUsername(String userpetname) {
         return userInfoRepository.findByUserPetName(userpetname);
+    }
+
+    //查找是否有相同数据(用户名称，注册手机号，注册邮箱)
+    public UserInfo getUserBySame(String name, String email, String phone) {
+        return userInfoRepository.findByUserPetNameOrUserPhoneOrUserEmail(name, email, phone);
     }
 }

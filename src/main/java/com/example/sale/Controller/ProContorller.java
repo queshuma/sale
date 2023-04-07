@@ -1,7 +1,9 @@
 package com.example.sale.Controller;
 
 import com.example.sale.Model.ProInfo;
+import com.example.sale.Model.UserInfo;
 import com.example.sale.Service.ProService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,13 +52,17 @@ public class ProContorller {
         return map;
     }
 
+    //产品搜索
     @GetMapping("/products/seacrh")
     public List ProductSearch(@RequestParam("value") String value) {
         List<ProInfo> proInfoList = proService.findPro(value);
         return proInfoList;
     }
-//    @PostMapping("/products/seacrh")
-//    public List ProductSearch(@RequestParam("value") String value) {
-//
-//    }
+
+    //产品分类
+    @GetMapping("/products/tag")
+    public List ProductTag(@RequestParam("tag") String tag) {
+        List<UserInfo> userInfoList = proService.findProTag(tag);
+        return userInfoList;
+    }
 }

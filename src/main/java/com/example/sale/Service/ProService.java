@@ -14,14 +14,17 @@ public class ProService {
     @Autowired
     private ProInfoRepository proInfoRepository;
 
+    //查找所有产品
     public List<ProInfo> findAll() {
         return proInfoRepository.findAll();
     }
 
+    //保存产品数据
     public void savePro(ProInfo proInfo) {
         proInfoRepository.save(proInfo);
     }
 
+    //更新产品数据
     public Map updatePro(ProInfo proInfo) {
         Map<String, String> map = new HashMap<>();
         long productId = proInfo.getProId();
@@ -49,8 +52,15 @@ public class ProService {
 
     }
 
+    //查找产品
     public List findPro(String value) {
         List<ProInfo> proInfoList  = proInfoRepository.findByKeyword(value);
+        return proInfoList;
+    }
+
+    //根据类别查找
+    public List findProTag(String tag) {
+        List<ProInfo> proInfoList  = proInfoRepository.findByKeyword(tag);
         return proInfoList;
     }
 }

@@ -70,9 +70,18 @@ public class UserContorller {
 
 //    用户信息
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> UserInfo(@RequestParam("value") String value) {
-        UserDto userDto = userService.findUserInfo(value);
-        return ResponseEntity.ok(userDto);
+    public UserDto UserInfo(HttpServletRequest httpServletRequest) {
+        Cookie[] cookies = httpServletRequest.getCookies();
+        UserInfo user = null;
+        for (Cookie c : cookies) {
+            String cachedValue = redisTemplate.opsForValue().get(c.getName());
+            if (c.getValue().equals(cachedValue)) {
+                UserInfo userInfo = userService.findUserByPetName(c.getName());
+                UserDto userDto = modelMapper.map(userInfo, UserDto.class);
+                return userDto;
+            }
+        }
+        return null;
     }
 
 //    用户注册
@@ -85,27 +94,26 @@ public class UserContorller {
 //    @Cacheable(value = "tokenCache", key = "#token")
     @PostMapping("/user/modify")
     public UserInfo UserModify(HttpServletRequest httpServletRequest,
+                               HttpServletResponse httpServletResponse,
                                 @RequestBody UserDto userDto) {
         Cookie[] cookies = httpServletRequest.getCookies();
         UserInfo user = null;
-        System.out.println("查看cookie");
-        for(Cookie cookie: cookies){
-            System.out.println(cookie.getName());
-        }
         for (Cookie c : cookies) {
             String cachedValue = redisTemplate.opsForValue().get(c.getName());
             if (c.getValue().equals(cachedValue)) {
-                System.out.println("cookie---------");
-                System.out.println(c.getName());
                 UserInfo userInfo = userService.findUserByPetName(c.getName());
-                System.out.println(userInfo);
-                BeanUtils.copyProperties(userDto, userInfo);
-                System.out.println(userInfo);
-                userService.modifyUser(userInfo);
-                return userInfo;
+                if(userService.getUserBySame(userInfo.getUserPetName()
+                        , userInfo.getUserEmail(), userInfo.getUserPhone()) == null ) {
+                    BeanUtils.copyProperties(userDto, userInfo);    //将输入的userDto覆盖到userInfo，原始的id等属性不变
+                    userService.modifyUser(userInfo);   //调用修改函数
+                    c.setMaxAge(0);
+                    httpServletResponse.addCookie(c);
+                    return userInfo;
+                }
+                System.out.println("返回为空");
+                return null;
             }
         }
         return null;
-//        return userService.modifyUserInfo(userInfo);
     }
 }

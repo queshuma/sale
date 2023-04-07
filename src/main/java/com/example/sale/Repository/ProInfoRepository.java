@@ -19,4 +19,6 @@ public interface ProInfoRepository extends JpaRepository<ProInfo, String> {
 
     @Query("SELECT u FROM ProInfo u WHERE u.proName LIKE %:value% OR u.proClass LIKE %:value%")
     List<ProInfo> findByKeyword(@Param("value") String value);
+
+    List<ProInfo> findByProClass(String tag);
 }

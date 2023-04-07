@@ -3,6 +3,7 @@ package com.example.sale.Model;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NonNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -43,6 +44,8 @@ public class UserInfo  implements Serializable {
 
 	@NotNull
    	@Column(name = "userdate" )
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date userDate;
 
 	@NotNull

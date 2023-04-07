@@ -1,106 +1,56 @@
 package com.example.sale.Model;
 
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "proinfo")
 public class ProInfo implements Serializable{
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "proid")
   private long proId;
+
+  @NotNull
   @Column(name = "proname")
   private String proName;
+
+  @NotNull
   @Column(name = "proclass")
   private String proClass;
+
+  @NotNull
   @Column(name = "proqual")
   private double proQual;
+
+  @NotNull
   @Column(name = "provalue")
   private long proValue;
-  @Column(name = "prorenttimes")
-  private String proRentTimes;
+
+  @NotNull
+  @Temporal(TemporalType.DATE)
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @Column(name = "protimes")
+  private Date proTimes;
+
+  @NotNull
   @Column(name = "prohas")
   private String proHas;
+
+  @NotNull
   @Column(name = "profrom")
   private String proFrom;
 
+  public ProInfo() {
 
-  public long getProId() {
-    return proId;
-  }
-
-  public void setProId(long proId) {
-    this.proId = proId;
-  }
-
-
-  public String getProName() {
-    return proName;
-  }
-
-  public void setProName(String proName) {
-    this.proName = proName;
-  }
-
-
-  public String getProClass() {
-    return proClass;
-  }
-
-  public void setProClass(String proClass) {
-    this.proClass = proClass;
-  }
-
-
-  public double getProQual() {
-    return proQual;
-  }
-
-  public void setProQual(double proQual) {
-    this.proQual = proQual;
-  }
-
-
-  public long getProValue() {
-    return proValue;
-  }
-
-  public void setProValue(long proValue) {
-    this.proValue = proValue;
-  }
-
-
-  public String getProRentTimes() {
-    return proRentTimes;
-  }
-
-  public void setProRentTimes(String proRentTimes) {
-    this.proRentTimes = proRentTimes;
-  }
-
-
-  public String getProHas() {
-    return proHas;
-  }
-
-  public void setProHas(String proHas) {
-    this.proHas = proHas;
-  }
-
-
-  public String getProFrom() {
-    return proFrom;
-  }
-
-  public void setProFrom(String proFrom) {
-    this.proFrom = proFrom;
   }
 }

@@ -25,6 +25,7 @@ public interface UserInfoRepository<S extends UserInfo> extends JpaRepository<Us
 
     UserInfo findByUserId(long id);
 
+    UserInfo findByUserPetNameOrUserPhoneOrUserEmail(String name, String phone, String email);
     @Override
     <S extends UserInfo> S save(S entity);
 }
