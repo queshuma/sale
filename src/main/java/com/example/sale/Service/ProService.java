@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//产品信息
 @Service
 public class ProService {
     @Autowired
@@ -25,30 +26,11 @@ public class ProService {
     }
 
     //更新产品数据
-    public Map updatePro(ProInfo proInfo) {
-        Map<String, String> map = new HashMap<>();
+    public ProInfo updatePro(ProInfo proInfo) {
         long productId = proInfo.getProId();
-        String productName = proInfo.getProName();
-        ProInfo product = proInfoRepository.findByProIdAndProName(productId, productName);
-        if (!product.getProClass().equals(proInfo.getProClass())) {
-            map.put("BeforeClass", product.getProClass());
-            map.put("AfterClass", proInfo.getProClass());
-            product.setProClass(proInfo.getProClass());
-        }
-        if (!product.getProHas().equals(proInfo.getProHas())) {
-            map.put("BeforeHas", product.getProHas());
-            map.put("AfterHas", proInfo.getProHas());
-            product.setProHas(proInfo.getProHas());
-        }
-        if (product.getProQual() != proInfo.getProQual()) {
-            map.put("BeforeQual", String.valueOf((product.getProQual())));
-            map.put("AfterQual", String.valueOf(proInfo.getProQual()));
-            product.setProQual(proInfo.getProQual());
-        }
-        if (map != null) {
-            proInfoRepository.save(product);
-        }
-        return map;
+//        ProInfo product = proInfoRepository.findByProId(productId);
+        proInfoRepository.save(proInfo);
+        return proInfo;
 
     }
 
@@ -60,7 +42,7 @@ public class ProService {
 
     //根据类别查找
     public List findProTag(String tag) {
-        List<ProInfo> proInfoList  = proInfoRepository.findByKeyword(tag);
+        List<ProInfo> proInfoList  = proInfoRepository.findByProClass(tag);
         return proInfoList;
     }
 }

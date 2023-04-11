@@ -25,21 +25,21 @@ public class RepairInfo  implements Serializable {
 	private static final long serialVersionUID =  3526473407725010071L;
 
 	@Id
-   	@Column(name = "proId" )
+   	@Column(name = "proid" )
 	private String proId;
 
-   	@Column(name = "repairQus" )
+   	@Column(name = "repairqus" )
 	private String repairQus;
 
-   	@Column(name = "repairName" )
+   	@Column(name = "repairname" )
 	private String repairName;
 
-   	@Column(name = "repairPay" )
+   	@Column(name = "repairpay" )
 	private String repairPay;
 
-   	@Column(name = "repairTime" )
+   	@Column(name = "repairtime" )
 	private Date repairTime;
 
-   	@Column(name = "repairBackTime" )
+   	@Column(name = "repairbacktime" )
 	private Date repairBackTime;
 }

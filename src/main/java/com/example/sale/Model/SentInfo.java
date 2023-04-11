@@ -1,12 +1,12 @@
 package com.example.sale.Model;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * sentInfo
@@ -15,28 +15,37 @@ import java.math.BigDecimal;
  * @date 2023-03-27 09:36:46 
  */
 
+@Data
 @Entity
-@Table ( name ="sentInfo")
-public class SentInfo  implements Serializable {
-
-	private static final long serialVersionUID =  6245064774274496210L;
+@Table ( name ="sentinfo")
+public class SentInfo implements Serializable {
 
 	@Id
-   	@Column(name = "proId" )
-	private String proId;
+   	@Column(name = "proid" )
+	private long proId;
 
-   	@Column(name = "sentFirstPay" )
-	private Long sentFirstPay;
+   	@Column(name = "sentfirstpay" )
+	private float sentFirstPay;
 
-   	@Column(name = "sentSecondPay" )
-	private Long sentSecondPay;
+   	@Column(name = "sentsecondpay" )
+	private float sentSecondPay;
 
-   	@Column(name = "sentThirdPay" )
-	private Long sentThirdPay;
+   	@Column(name = "sentthirdpay" )
+	private float sentThirdPay;
 
-   	@Column(name = "sentBuy" )
-	private Long sentBuy;
+	@Column(name = "sentforthpay" )
+	private float sentForthPay;
 
-   	@Column(name = "sentDiscount" )
-	private BigDecimal sentDiscount;
+	@Column(name = "sentfirthpay" )
+	private float sentFirthPay;
+
+   	@Column(name = "sentbuy" )
+	private float sentBuy;
+
+   	@Column(name = "sentdiscount" )
+	private float sentDiscount;
+
+	public SentInfo() {
+
+	}
 }

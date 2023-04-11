@@ -23,21 +23,21 @@ public class UserFromInfo  implements Serializable {
 	private static final long serialVersionUID =  5973069099316531625L;
 
 	@Id
-   	@Column(name = "proId" )
+   	@Column(name = "proid" )
 	private Long proId;
 
-   	@Column(name = "proFrom" )
+   	@Column(name = "profrom" )
 	private String proFrom;
 
-   	@Column(name = "proBackPay" )
+   	@Column(name = "probackpay" )
 	private BigDecimal proBackPay;
 
-   	@Column(name = "proInTime" )
+   	@Column(name = "prointime" )
 	private Date proInTime;
 
-   	@Column(name = "proInName" )
+   	@Column(name = "proinname" )
 	private String proInName;
 
-   	@Column(name = "proQual" )
+   	@Column(name = "proqual" )
 	private BigDecimal proQual;
 }

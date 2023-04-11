@@ -14,7 +14,7 @@ public class TokenUtil {
 
     public static String generateToken(String username) {
         Date now = new Date();
-        Date expireTime = new Date(now.getTime() + 24 * 60 * 60 * 1000); // Token 过期时间为 24 小时
+        Date expireTime = new Date(now.getTime() + 6 * 60 * 60 * 1000); // Token 过期时间为 24 小时
         Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
         String token = JWT.create()
                 .withClaim("username", username)

@@ -31,9 +31,9 @@ import static org.junit.Assert.assertEquals;
 public class UserContorller {
     @Autowired
     private UserService userService;
-
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
 
     //    对象转换工具
     @Autowired
@@ -49,16 +49,16 @@ public class UserContorller {
         String user = userService.findUser(EORP, Password);
         if (user != null) {
             Cookie[] cookies=httpServletRequest.getCookies();
-            for(Cookie cookie: cookies){
-                cookie.setMaxAge(0);
-                httpServletResponse.addCookie(cookie);
+            if (cookies != null) {
+                for(Cookie cookie: cookies){
+                    cookie.setMaxAge(0);
+                    httpServletResponse.addCookie(cookie);
+                }
             }
             String token = TokenUtil.generateToken(user);
-//            Token tokenObj = new Token();
             redisTemplate.opsForValue().set(user, token, 24, TimeUnit.HOURS);
-            System.out.println("token:" + token);
-            System.out.println("user:" + user);
             Cookie cookie = new Cookie(user, token);
+            cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
             // 将 Token 保存到数据库或者缓存中
             return token;
@@ -91,7 +91,6 @@ public class UserContorller {
     }
 
 //    用户信息修改
-//    @Cacheable(value = "tokenCache", key = "#token")
     @PostMapping("/user/modify")
     public UserInfo UserModify(HttpServletRequest httpServletRequest,
                                HttpServletResponse httpServletResponse,
@@ -115,5 +114,18 @@ public class UserContorller {
             }
         }
         return null;
+    }
+//    清除cookie
+    @PostMapping(value = "/user/cookie")
+    public String userCookie(HttpServletRequest httpServletRequest,
+                             HttpServletResponse httpServletResponse) {
+        Cookie[] cookies=httpServletRequest.getCookies();
+        if (cookies != null) {
+            for(Cookie cookie: cookies){
+                cookie.setMaxAge(0);
+                httpServletResponse.addCookie(cookie);
+            }
+        }
+        return "success";
     }
 }
