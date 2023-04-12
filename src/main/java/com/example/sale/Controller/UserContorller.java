@@ -31,6 +31,7 @@ import static org.junit.Assert.assertEquals;
 public class UserContorller {
     @Autowired
     private UserService userService;
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
