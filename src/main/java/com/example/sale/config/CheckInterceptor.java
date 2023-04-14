@@ -21,11 +21,13 @@ import java.util.Date;
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = httpServletRequest.getCookies();
+        String cachedValue = null;
         UserInfo user = null;
         if (cookies != null) {
             for (Cookie c : cookies) {
-                String cachedValue = redisTemplate.opsForValue().get(c.getName());
-                if (c.getValue().equals(cachedValue)) {
+                 cachedValue = redisTemplate.opsForValue().get(c.getValue());
+                System.out.println(cachedValue);
+                 if (cachedValue != null) {
                     return true;
                 }
             }

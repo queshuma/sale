@@ -3,11 +3,14 @@ package com.example.sale.Service;
 import com.example.sale.Dto.OrderDto;
 import com.example.sale.Dto.SentDto;
 import com.example.sale.Dto.ShopDto;
+import com.example.sale.Dto.ShopProDto;
 import com.example.sale.Model.ProInfo;
+import com.example.sale.Model.RepairInfo;
 import com.example.sale.Model.SentInfo;
 import com.example.sale.Model.UserInfo;
 import com.example.sale.Repository.ProInfoRepository;
 import com.example.sale.Repository.SentRepository;
+import com.example.sale.Repository.ShopRepository;
 import com.example.sale.Repository.UserInfoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ public class ShopService {
 
     @Autowired
     private ProInfoRepository proInfoRepository;
+
+    @Autowired
+    private ShopRepository shopRepository;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
@@ -57,34 +63,35 @@ public class ShopService {
         }
     }
 
-    public OrderDto ShopInfo(List<SentDto> sentDtoList, HttpServletRequest httpServletRequest) {
-        List<ShopDto> shopDtoList = new ArrayList<>();
+    public RepairInfo ShopSave(RepairInfo repairInfo, String name) {
+        shopRepository.save(repairInfo);
+        return repairInfo;
+    }
+
+    public ShopDto ShopInfo(long userId) {
+        List<ShopProDto> shopProDtos = new ArrayList<>();
+        ShopDto shopDto = new ShopDto();
         float costSum = 0;
-        for (SentDto sentDto:sentDtoList) {
-            ProInfo proInfo = proInfoRepository.findByProId(sentDto.getProId());
-            SentInfo sentInfo = sentRepository.findByProId(sentDto.getProId());
-            ShopDto shopDto;
-            shopDto = modelMapper.map(sentDto, ShopDto.class);
-            modelMapper.map(proInfo, shopDto);
-            modelMapper.map(sentInfo, shopDto);
-            shopDto.setSentCost(cost(sentDto.getProId(), sentDto.getRentTime()));
-            shopDto.setCost(sentCost(shopDto.getSentCost(), shopDto.getProId()));
-            costSum += shopDto.getCost();
-            shopDtoList.add(shopDto);
+        List<RepairInfo> repairInfos = shopRepository.findByUserId(userId);
+        UserInfo userInfo = userInfoRepository.findByUserId(userId);
+        for (RepairInfo repairInfo: repairInfos) {
+            long proId = repairInfo.getProId();
+            ProInfo proInfo = proInfoRepository.findByProId(proId);
+            SentInfo sentInfo = sentRepository.findByProId(proId);
+            ShopProDto shopProDto;
+            shopProDto = modelMapper.map(repairInfo, ShopProDto.class);
+            modelMapper.map(proInfo, shopProDto);
+            shopProDto.setSentCost(cost(proId, repairInfo.getSentTime()));
+            shopProDto.setCost(sentCost(shopProDto.getSentCost(), proId));
+            costSum += shopProDto.getCost();
+            shopProDtos.add(shopProDto);
         }
-        OrderDto orderDto = new OrderDto();
-        orderDto.setShopDtoList(shopDtoList);
-        Cookie[] cookies = httpServletRequest.getCookies();
-        UserInfo user = null;
-        for (Cookie c : cookies) {
-            String cachedValue = redisTemplate.opsForValue().get(c.getName());
-            if (c.getValue().equals(cachedValue)) {
-                UserInfo userInfo = userInfoRepository.findByUserPetName(c.getName());
-                modelMapper.map(userInfo, orderDto);
-                orderDto.setCostSum(costSum);
-                return orderDto;
-            }
-        }
-        return orderDto;
+        shopDto.setShopProDto(shopProDtos);
+        shopDto.setCostSum(costSum);
+        return shopDto;
+    }
+
+    public String OrderInfo(List<SentDto> sentDtoList, HttpServletRequest httpServletRequest) {
+        return "success";
     }
 }

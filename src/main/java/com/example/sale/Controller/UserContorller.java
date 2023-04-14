@@ -57,10 +57,11 @@ public class UserContorller {
                 }
             }
             String token = TokenUtil.generateToken(user);
-            redisTemplate.opsForValue().set(user, token, 24, TimeUnit.HOURS);
-            Cookie cookie = new Cookie(user, token);
+            redisTemplate.opsForValue().set(token, user, 24, TimeUnit.HOURS);
+            Cookie cookie = new Cookie("user", token);
             cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
+//            System.out.println( (String) redisTemplate.opsForValue().get(token));
             // 将 Token 保存到数据库或者缓存中
             return token;
         } else {

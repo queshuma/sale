@@ -1,8 +1,12 @@
 package com.example.sale.Repository;
 
+import com.example.sale.Model.RepairInfo;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class ShopRepository {
+import java.util.List;
 
+@Repository
+public interface ShopRepository extends JpaRepository<RepairInfo, String> {
+    List<RepairInfo> findByUserId(long userIn);
 }

@@ -22,6 +22,8 @@ public class SentService {
     @Autowired
     private ProInfoRepository proInfoRepository;
 
+
+
     public SentInfo saveInfo(SentInfo sentInfo) {
         if (proInfoRepository.findByProId(sentInfo.getProId()) != null) {
             sentRepository.save(sentInfo);

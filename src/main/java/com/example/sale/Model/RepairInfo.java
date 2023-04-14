@@ -19,27 +19,21 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table ( name ="repairInfo")
+@Table ( name ="repairinfo")
 public class RepairInfo  implements Serializable {
 
 	private static final long serialVersionUID =  3526473407725010071L;
 
 	@Id
    	@Column(name = "proid" )
-	private String proId;
+	private long proId;
 
-   	@Column(name = "repairqus" )
-	private String repairQus;
+   	@Column(name = "userid" )
+	private long userId;
 
-   	@Column(name = "repairname" )
-	private String repairName;
+	@Column(name = "senttime")
+	private int sentTime;
 
-   	@Column(name = "repairpay" )
-	private String repairPay;
-
-   	@Column(name = "repairtime" )
-	private Date repairTime;
-
-   	@Column(name = "repairbacktime" )
-	private Date repairBackTime;
+   	@Column(name = "addtime" )
+	private Date addTime;
 }
