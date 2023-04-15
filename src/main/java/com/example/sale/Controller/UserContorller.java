@@ -5,6 +5,7 @@ import com.example.sale.Dto.UserDto;
 import com.example.sale.Model.ProInfo;
 import com.example.sale.Model.UserInfo;
 import com.example.sale.Service.ProService;
+import com.example.sale.Service.RedisService;
 import com.example.sale.Service.UserService;
 import com.example.sale.config.Token;
 import com.example.sale.config.TokenUtil;
@@ -73,17 +74,14 @@ public class UserContorller {
 //    用户信息
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDto UserInfo(HttpServletRequest httpServletRequest) {
-        Cookie[] cookies = httpServletRequest.getCookies();
-        UserInfo user = null;
-        for (Cookie c : cookies) {
-            String cachedValue = redisTemplate.opsForValue().get(c.getName());
-            if (c.getValue().equals(cachedValue)) {
-                UserInfo userInfo = userService.findUserByPetName(c.getName());
-                UserDto userDto = modelMapper.map(userInfo, UserDto.class);
-                return userDto;
-            }
+        String redisInfo = RedisService.Redis(httpServletRequest);
+        UserDto userDto = new UserDto();
+        if (redisInfo != null) {
+            UserInfo userInfo = userService.findUserByPetName(redisInfo);
+            userDto = modelMapper.map(userInfo, UserDto.class);
+            return userDto;
         }
-        return null;
+        return userDto;
     }
 
 //    用户注册
@@ -99,20 +97,17 @@ public class UserContorller {
                                 @RequestBody UserDto userDto) {
         Cookie[] cookies = httpServletRequest.getCookies();
         UserInfo user = null;
+        String cachedValue = null;
         for (Cookie c : cookies) {
-            String cachedValue = redisTemplate.opsForValue().get(c.getName());
-            if (c.getValue().equals(cachedValue)) {
-                UserInfo userInfo = userService.findUserByPetName(c.getName());
-                if(userService.getUserBySame(userInfo.getUserPetName()
-                        , userInfo.getUserEmail(), userInfo.getUserPhone()) == null ) {
-                    BeanUtils.copyProperties(userDto, userInfo);    //将输入的userDto覆盖到userInfo，原始的id等属性不变
-                    userService.modifyUser(userInfo);   //调用修改函数
-                    c.setMaxAge(0);
-                    httpServletResponse.addCookie(c);
-                    return userInfo;
-                }
-                System.out.println("返回为空");
-                return null;
+            cachedValue = redisTemplate.opsForValue().get(c.getValue());
+            if (cachedValue != null) {
+                UserInfo userInfo = userService.findUserByPetName(cachedValue);
+                System.out.println(userInfo.getUserPetName());
+                BeanUtils.copyProperties(userDto, userInfo);    //将输入的userDto覆盖到userInfo，原始的id等属性不变
+                userService.modifyUser(userInfo);   //调用修改函数
+                c.setMaxAge(0);
+                httpServletResponse.addCookie(c);
+                return userInfo;
             }
         }
         return null;

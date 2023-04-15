@@ -26,7 +26,6 @@ import java.util.Date;
         if (cookies != null) {
             for (Cookie c : cookies) {
                  cachedValue = redisTemplate.opsForValue().get(c.getValue());
-                System.out.println(cachedValue);
                  if (cachedValue != null) {
                     return true;
                 }

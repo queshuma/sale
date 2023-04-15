@@ -1,19 +1,13 @@
 package com.example.sale.Controller;
 
-import com.example.sale.Dto.OrderDto;
-import com.example.sale.Dto.SentDto;
 import com.example.sale.Dto.ShopDto;
 import com.example.sale.Model.RepairInfo;
-import com.example.sale.Model.SentInfo;
 import com.example.sale.Model.UserInfo;
-import com.example.sale.Repository.ShopRepository;
-import com.example.sale.Repository.UserInfoRepository;
 import com.example.sale.Service.ShopService;
 import com.example.sale.Service.UserService;
-import org.aspectj.weaver.ast.Or;
+import com.example.sale.Service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,41 +31,40 @@ public class ShopController {
 
     @PostMapping(value = "/shop/add")
     public String ShopAdd (@RequestBody RepairInfo repairInfo, HttpServletRequest httpServletRequest) {
-        Cookie[] cookies=httpServletRequest.getCookies();
-        String cachedValue = null;
-        Date date = new Date();
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                cachedValue = redisTemplate.opsForValue().get(c.getValue());
-                if (cachedValue != null) {
-                    UserInfo userInfo = userService.findUserByPetName(cachedValue);
-                    repairInfo.setUserId(userInfo.getUserId());
-                    repairInfo.setAddTime(date);
-                    shopService.ShopSave(repairInfo, cachedValue);
-                    return "success";
-                }
-            }
+        String redisInfo = RedisService.Redis(httpServletRequest);
+        if (redisInfo != null) {
+            UserInfo userInfo = userService.findUserByPetName(redisInfo);
+            repairInfo.setUserId(userInfo.getUserId());
+            repairInfo.setAddTime(new Date());
+            shopService.ShopSave(repairInfo, redisInfo);
+            return "success";
         } else {
             return "null";
         }
-        return null;
+    }
+
+    @PostMapping(value = "/shop/del")
+    private String ShopDel(@RequestBody List<RepairInfo> repairInfoList, HttpServletRequest httpServletRequest) {
+        String redisInfo = RedisService.Redis(httpServletRequest);
+        if (redisInfo != null) {
+            UserInfo userInfo = userService.findUserByPetName(redisInfo);
+            for (RepairInfo repairInfo:repairInfoList) {
+                repairInfo.setUserId(userInfo.getUserId());
+                shopService.ShopDelete(repairInfo);
+            }
+            return "success";
+        }
+        return "fail";
     }
 
     @PostMapping(value = "/shop")
     public ShopDto Shop(HttpServletRequest httpServletRequest) {
-        Cookie[] cookies=httpServletRequest.getCookies();
-        String cachedValue = null;
-        Date date = new Date();
-        ShopDto shopDto = null;
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                cachedValue = redisTemplate.opsForValue().get(c.getValue());
-                if (cachedValue != null) {
-                    UserInfo userInfo = userService.findUserByPetName(cachedValue);
-                    long userId = userInfo.getUserId();
-                    return shopService.ShopInfo(userId);
-                }
-            }
+        String redisInfo = RedisService.Redis(httpServletRequest);
+        ShopDto shopDto = new ShopDto();
+        if (redisInfo != null) {
+            UserInfo userInfo = userService.findUserByPetName(redisInfo);
+            long userId = userInfo.getUserId();
+            return shopService.ShopInfo(userId);
         }
         return shopDto;
     }

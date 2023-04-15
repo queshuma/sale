@@ -68,6 +68,15 @@ public class ShopService {
         return repairInfo;
     }
 
+    public RepairInfo ShopDelete(RepairInfo repairInfo) {
+        RepairInfo repair = shopRepository.findByUserIdAndProId(repairInfo.getUserId(), repairInfo.getProId());
+        if (repair != null) {
+            System.out.println(repair);
+            shopRepository.delete(repair);
+        }
+        return repairInfo;
+    }
+
     public ShopDto ShopInfo(long userId) {
         List<ShopProDto> shopProDtos = new ArrayList<>();
         ShopDto shopDto = new ShopDto();

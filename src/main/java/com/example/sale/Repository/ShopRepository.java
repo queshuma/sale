@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ShopRepository extends JpaRepository<RepairInfo, String> {
-    List<RepairInfo> findByUserId(long userIn);
+    List<RepairInfo> findByUserId(long userId);
+
+    RepairInfo findByUserIdAndProId(long userId, long proId);
 }
